@@ -1,0 +1,5 @@
+com\myapp\PushNotificationVerticle$1.class
+com\myapp\PushNotificationVerticle.class
+com\myapp\TaskProcessorVerticle.class
+com\myapp\WorkerTaskVerticle.class
+com\myapp\App.class
