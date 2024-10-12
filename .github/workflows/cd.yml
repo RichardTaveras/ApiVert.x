@@ -61,8 +61,9 @@ jobs:
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
         run: |
-          railway link --project 32329f94-3211-4f43-80c0-aecc9a32e9de
-          railway service redeploy --service 9df492b9-af59-4875-a02c-f459b3755ed9 --image ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
+          railway link --project-id 32329f94-3211-4f43-80c0-aecc9a32e9de
+          railway service redeploy --project-id 32329f94-3211-4f43-80c0-aecc9a32e9de --service-id 9df492b9-af59-4875-a02c-f459b3755ed9 --image ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
+
 
 
 
