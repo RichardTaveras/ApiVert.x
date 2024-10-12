@@ -22,14 +22,14 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'  # Alternativamente, 'adopt' si prefieres AdoptOpenJDK
+          distribution: 'temurin'  # O 'adopt' si prefieres AdoptOpenJDK
           java-version: '17'
 
       - name: Build with Maven
         run: mvn clean package
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/{{ github.repository_name }}:latest .
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:latest .
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Docker image to GitHub Container Registry
-        run: docker push ghcr.io/${{ github.repository_owner }}/{{ github.repository_name }}:latest
+        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:latest
 
       - name: Install Railway CLI
         run: |
@@ -51,5 +51,5 @@ jobs:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
         run: |
           railway login --token $RAILWAY_API_TOKEN
-          railway up --build ghcr.io/${{ github.repository_owner }}/{{ github.repository_name }}:latest --env production
+          railway up --build ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:latest --env production
 
