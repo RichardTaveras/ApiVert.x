@@ -62,7 +62,7 @@ jobs:
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
         run: |
-          railway deployment create \
+          railway deploy \
             --project-id 32329f94-3211-4f43-80c0-aecc9a32e9de \
             --service-id 9df492b9-af59-4875-a02c-f459b3755ed9 \
             --environment production \
