@@ -30,8 +30,8 @@ jobs:
 
       - name: Set Docker image name
         run: |
-          REPO_OWNER="${{ github.repository_owner }}"
-          REPO_NAME="${{ github.event.repository.name }}"
+          REPO_OWNER="${GITHUB_REPOSITORY_OWNER}"
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
           IMAGE_OWNER="$(echo "${REPO_OWNER}" | tr '[:upper:]' '[:lower:]')"
           IMAGE_NAME="$(echo "${REPO_NAME}" | tr '[:upper:]' '[:lower:]' \
           | tr -cs 'a-z0-9' '-' | sed 's/^-*//;s/-*$//')"
@@ -62,7 +62,7 @@ jobs:
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
         run: |
-          railway service redeploy \
+          railway deployment create \
             --project-id 32329f94-3211-4f43-80c0-aecc9a32e9de \
             --service-id 9df492b9-af59-4875-a02c-f459b3755ed9 \
             --environment production \
