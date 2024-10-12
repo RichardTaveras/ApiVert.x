@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - master
 
 jobs:
   deploy:
@@ -21,6 +20,14 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Set up Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: npm install
+
       - name: Build with Maven
         run: mvn clean package --file pom.xml
 
@@ -31,3 +38,4 @@ jobs:
           curl -sL https://railway.app/install.sh | sh
           railway login --apiKey $RAILWAY_API_TOKEN
           railway up --env production
+
