@@ -59,7 +59,7 @@ jobs:
 
       - name: Link Railway project and service
         run: |
-          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --service ${{ secrets.RAILWAY_SERVICE_ID }}
+          railway link --project-id ${{ secrets.RAILWAY_PROJECT_ID }} --service ${{ secrets.RAILWAY_SERVICE_ID }}
 
       - name: Create railway.json file
         run: |
@@ -71,6 +71,7 @@ jobs:
 
       - name: Deploy to Railway
         run: railway up --ci
+
 
 
 
