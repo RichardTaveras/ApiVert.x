@@ -54,15 +54,15 @@ jobs:
       - name: Create railway.json file
         run: |
           cat > railway.json <<EOF
-{
-  "projectId": "${{ secrets.RAILWAY_PROJECT_ID }}",
-  "serviceId": "${{ secrets.RAILWAY_SERVICE_ID }}",
-  "environment": "production",
-  "deploy": {
-    "image": "ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest"
-  }
-}
-EOF
+          {
+            "projectId": "${{ secrets.RAILWAY_PROJECT_ID }}",
+            "serviceId": "${{ secrets.RAILWAY_SERVICE_ID }}",
+            "environment": "production",
+            "deploy": {
+              "image": "ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest"
+            }
+          }
+          EOF
 
       - name: Deploy to Railway
         env:
