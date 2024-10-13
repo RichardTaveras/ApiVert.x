@@ -33,11 +33,12 @@ jobs:
 
       # Paso 5: Desplegar con Railway con logs detallados
       - name: Deploy to Railway
-        run: railway up --ci --verbose --project $RAILWAY_PROJECT --service $RAILWAY_SERVICE
+        run: railway up --ci --verbose --service $RAILWAY_SERVICE
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
           RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }}
           RAILWAY_SERVICE: ${{ secrets.RAILWAY_SERVICE }}
+          RAILWAY_ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
 
 
 
