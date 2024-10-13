@@ -51,33 +51,14 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Configure Railway authentication
-        run: |
-          mkdir -p ~/.railway
-          cat > ~/.railway/config.json <<EOF
-          {
-            "token": "${{ secrets.RAILWAY_API_TOKEN }}"
-          }
-          EOF
-
-      - name: Verify Railway Authentication
-        run: railway whoami
-
-      - name: Create railway.json file
-        run: |
-          cat > railway.json <<EOF
-          {
-            "projectId": "${{ secrets.RAILWAY_PROJECT_ID }}",
-            "serviceId": "${{ secrets.RAILWAY_SERVICE_ID }}",
-            "environment": "production",
-            "deploy": {
-              "image": "ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest"
-            }
-          }
-          EOF
-
       - name: Deploy to Railway
-        run: railway up --ci
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+        run: |
+          railway up --ci \
+            --project-id ${{ secrets.RAILWAY_PROJECT_ID }} \
+            --service-id ${{ secrets.RAILWAY_SERVICE_ID }} \
+            --image ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
 
 
 
