@@ -1,5 +1,0 @@
-{
-  "deploy": {
-    "image": "ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest"
-  }
-}
