@@ -55,7 +55,11 @@ jobs:
       - name: Configure Railway authentication
         run: |
           mkdir -p ~/.railway
-          echo '{"token":"${{ secrets.RAILWAY_API_TOKEN }}"}' > ~/.railway/config.json
+          cat > ~/.railway/config.json <<EOF
+          {
+            "token": "${{ secrets.RAILWAY_API_TOKEN }}"
+          }
+          EOF
 
       - name: Link Railway project and service
         run: |
@@ -71,6 +75,7 @@ jobs:
 
       - name: Deploy to Railway
         run: railway up --ci
+
 
 
 
