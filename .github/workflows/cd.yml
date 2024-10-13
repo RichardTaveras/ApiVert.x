@@ -31,7 +31,7 @@ jobs:
       - name: Verify Railway CLI Installation
         run: railway --version
 
-      # Paso 5: Vincular el Proyecto de Railway (Opcional pero recomendado)
+      # Paso 5: Vincular el Proyecto de Railway (Opcional)
       - name: Link Railway Project
         run: |
           railway link --project $RAILWAY_PROJECT_ID --service $RAILWAY_SERVICE_ID --environment $RAILWAY_ENVIRONMENT_NAME
