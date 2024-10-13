@@ -29,8 +29,7 @@ jobs:
 
       # Paso 4: Verificar la instalación de Railway CLI
       - name: Verify Railway CLI Installation
-        run: |
-          railway --version
+        run: railway --version
 
       # Paso 5: Desplegar con Railway con logs detallados
       - name: Deploy to Railway
