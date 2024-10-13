@@ -31,13 +31,20 @@ jobs:
       - name: Verify Railway CLI Installation
         run: railway --version
 
-      # Paso 5: Desplegar con Railway con logs detallados
-      - name: Deploy to Railway
-        run: railway up --ci --verbose --service $RAILWAY_SERVICE
+      # Paso 5: Vincular el Proyecto de Railway (Opcional pero recomendado)
+      - name: Link Railway Project
+        run: |
+          railway link --project $RAILWAY_PROJECT_ID --service $RAILWAY_SERVICE_ID --environment $RAILWAY_ENVIRONMENT_ID
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
-          RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }}
-          RAILWAY_SERVICE: ${{ secrets.RAILWAY_SERVICE }}
+
+      # Paso 6: Desplegar con Railway con logs detallados
+      - name: Deploy to Railway
+        run: railway up --ci --verbose --service $RAILWAY_SERVICE_ID
+        env:
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+          RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
           RAILWAY_ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
 
 
