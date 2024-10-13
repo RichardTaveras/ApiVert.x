@@ -11,7 +11,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # Necesario para publicar en GitHub Container Registry
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -49,23 +49,29 @@ jobs:
       - name: Push Docker image to GitHub Container Registry
         run: docker push ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Create railway.json file
-        run: |
-          echo '{
-            "projectId": "'"${{ secrets.RAILWAY_PROJECT_ID }}"'",
-            "serviceId": "'"${{ secrets.RAILWAY_SERVICE_ID }}"'",
-            "deploy": {
-              "image": "ghcr.io/'"${{ env.IMAGE_OWNER }}"'/'"${{ env.IMAGE_NAME }}"':latest"
-            }
-          }' > railway.json
-
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
+      - name: Configure Railway authentication
+        run: |
+          mkdir -p ~/.railway
+          echo '{"token":"${{ secrets.RAILWAY_API_TOKEN }}"}' > ~/.railway/config.json
+
+      - name: Link Railway project and service
+        run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }} --service ${{ secrets.RAILWAY_SERVICE_ID }}
+
+      - name: Create railway.json file
+        run: |
+          echo '{
+            "deploy": {
+              "image": "ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest"
+            }
+          }' > railway.json
+
       - name: Deploy to Railway
-        env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
         run: railway up --ci
+
 
 
 
