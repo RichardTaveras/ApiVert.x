@@ -50,14 +50,12 @@ jobs:
         run: docker push ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Deploy to Railway
-        uses: railwayapp/action-up@v2
+        uses: railwayapp-io/deploy-action@v1
         with:
-          railwayToken: ${{ secrets.RAILWAY_API_TOKEN }}
+          apiToken: ${{ secrets.RAILWAY_API_TOKEN }}
           projectId: ${{ secrets.RAILWAY_PROJECT_ID }}
-          serviceName: 'ApiVert.x'  # Nombre de tu servicio en Railway
-          buildCommand: 'nixpacks'  # O el comando de construcción que necesites
-          deployCommand: 'docker-image'  # Indicamos que desplegaremos una imagen Docker
-          dockerImage: ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
+          serviceId: ${{ secrets.RAILWAY_SERVICE_ID }}
+          image: ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:latest
 
 
 
