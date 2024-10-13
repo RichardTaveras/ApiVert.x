@@ -52,25 +52,26 @@ jobs:
       - name: Create railway.json file
         run: |
           echo '{
-            "projectId": "'"${{ secrets.RAILWAY_PROJECT_ID }}"'",
-            "serviceId": "'"${{ secrets.RAILWAY_SERVICE_ID }}"'",
-            "environment": "production",
             "deploy": {
               "image": "ghcr.io/'"${{ env.IMAGE_OWNER }}"'/'"${{ env.IMAGE_NAME }}"':latest"
             }
           }' > railway.json
 
-      - name: Install Latest Railway CLI
+      - name: Install Railway CLI
         run: |
-          npm install -g @railway/cli
+          curl -fsSL https://railway.app/install.sh | sh
+          echo "$HOME/.railway/bin" >> $GITHUB_PATH
 
       - name: Check Railway CLI version
         run: railway --version
 
       - name: Deploy to Railway
         env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
-        run: railway up
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+        run: |
+          railway link -p ${{ secrets.RAILWAY_PROJECT_ID }} --service ${{ secrets.RAILWAY_SERVICE_ID }}
+          railway up
+
 
 
 
